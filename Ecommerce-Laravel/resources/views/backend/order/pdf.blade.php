@@ -6,7 +6,7 @@
 </head>
 <body>
 
-@if($order)
+
 <style type="text/css">
   .invoice-header {
     background: #f7f7f7;
@@ -174,8 +174,6 @@
     <h5>Authority Signature:</h5>
   </div>
   <div class="clearfix"></div>
-@else
-  <h5 class="text-danger">Invalid</h5>
-@endif
+
 </body>
 </html>
