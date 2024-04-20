@@ -59,6 +59,14 @@ class ParagonIE_Sodium_Compat
     const CRYPTO_AEAD_AES256GCM_NSECBYTES = 0;
     const CRYPTO_AEAD_AES256GCM_NPUBBYTES = 12;
     const CRYPTO_AEAD_AES256GCM_ABYTES = 16;
+    const CRYPTO_AEAD_AEGIS128L_KEYBYTES = 16;
+    const CRYPTO_AEAD_AEGIS128L_NSECBYTES = 0;
+    const CRYPTO_AEAD_AEGIS128L_NPUBBYTES = 16;
+    const CRYPTO_AEAD_AEGIS128L_ABYTES = 32;
+    const CRYPTO_AEAD_AEGIS256_KEYBYTES = 32;
+    const CRYPTO_AEAD_AEGIS256_NSECBYTES = 0;
+    const CRYPTO_AEAD_AEGIS256_NPUBBYTES = 32;
+    const CRYPTO_AEAD_AEGIS256_ABYTES = 32;
     const CRYPTO_AEAD_CHACHA20POLY1305_KEYBYTES = 32;
     const CRYPTO_AEAD_CHACHA20POLY1305_NSECBYTES = 0;
     const CRYPTO_AEAD_CHACHA20POLY1305_NPUBBYTES = 8;
@@ -297,6 +305,218 @@ class ParagonIE_Sodium_Compat
             return (int) call_user_func('\\Sodium\\compare', $left, $right);
         }
         return ParagonIE_Sodium_Core_Util::compare($left, $right);
+    }
+
+    /**
+     * Authenticated Encryption with Associated Data: Decryption
+     *
+     * Algorithm:
+     *     AEGIS-128L
+     *
+     * @param string $ciphertext Encrypted message (with MAC appended)
+     * @param string $assocData  Authenticated Associated Data (unencrypted)
+     * @param string $nonce      Number to be used only Once; must be 32 bytes
+     * @param string $key        Encryption key
+     *
+     * @return string            The original plaintext message
+     * @throws SodiumException
+     * @throws TypeError
+     * @psalm-suppress MixedArgument
+     * @psalm-suppress MixedInferredReturnType
+     * @psalm-suppress MixedReturnStatement
+     */
+    public static function crypto_aead_aegis128l_decrypt(
+        $ciphertext = '',
+        $assocData = '',
+        $nonce = '',
+        $key = ''
+    ) {
+        ParagonIE_Sodium_Core_Util::declareScalarType($ciphertext, 'string', 1);
+        ParagonIE_Sodium_Core_Util::declareScalarType($assocData, 'string', 2);
+        ParagonIE_Sodium_Core_Util::declareScalarType($nonce, 'string', 3);
+        ParagonIE_Sodium_Core_Util::declareScalarType($key, 'string', 4);
+
+        /* Input validation: */
+        if (ParagonIE_Sodium_Core_Util::strlen($nonce) !== self::CRYPTO_AEAD_AEGIS128L_NPUBBYTES) {
+            throw new SodiumException('Nonce must be CRYPTO_AEAD_AEGIS_128L_NPUBBYTES long');
+        }
+        if (ParagonIE_Sodium_Core_Util::strlen($key) !== self::CRYPTO_AEAD_AEGIS128L_KEYBYTES) {
+            throw new SodiumException('Key must be CRYPTO_AEAD_AEGIS128L_KEYBYTES long');
+        }
+        $ct_length = ParagonIE_Sodium_Core_Util::strlen($ciphertext);
+        if ($ct_length < self::CRYPTO_AEAD_AEGIS128L_ABYTES) {
+            throw new SodiumException('Message must be at least CRYPTO_AEAD_AEGIS128L_ABYTES long');
+        }
+
+        $ct = ParagonIE_Sodium_Core_Util::substr(
+            $ciphertext,
+            0,
+            $ct_length - self::CRYPTO_AEAD_AEGIS128L_ABYTES
+        );
+        $tag = ParagonIE_Sodium_Core_Util::substr(
+            $ciphertext,
+            $ct_length - self::CRYPTO_AEAD_AEGIS128L_ABYTES,
+            self::CRYPTO_AEAD_AEGIS128L_ABYTES
+        );
+        return ParagonIE_Sodium_Core_AEGIS128L::decrypt($ct, $tag, $assocData, $key, $nonce);
+    }
+
+    /**
+     * Authenticated Encryption with Associated Data: Encryption
+     *
+     * Algorithm:
+     *     AEGIS-128L
+     *
+     * @param string $plaintext Message to be encrypted
+     * @param string $assocData Authenticated Associated Data (unencrypted)
+     * @param string $nonce     Number to be used only Once; must be 32 bytes
+     * @param string $key       Encryption key
+     *
+     * @return string           Ciphertext with 32-byte authentication tag appended
+     * @throws SodiumException
+     * @throws TypeError
+     * @psalm-suppress MixedArgument
+     */
+    public static function crypto_aead_aegis128l_encrypt(
+        $plaintext = '',
+        $assocData = '',
+        $nonce = '',
+        $key = ''
+    ) {
+        ParagonIE_Sodium_Core_Util::declareScalarType($plaintext, 'string', 1);
+        ParagonIE_Sodium_Core_Util::declareScalarType($assocData, 'string', 2);
+        ParagonIE_Sodium_Core_Util::declareScalarType($nonce, 'string', 3);
+        ParagonIE_Sodium_Core_Util::declareScalarType($key, 'string', 4);
+
+        /* Input validation: */
+        if (ParagonIE_Sodium_Core_Util::strlen($nonce) !== self::CRYPTO_AEAD_AEGIS128L_NPUBBYTES) {
+            throw new SodiumException('Nonce must be CRYPTO_AEAD_AEGIS128L_KEYBYTES long');
+        }
+        if (ParagonIE_Sodium_Core_Util::strlen($key) !== self::CRYPTO_AEAD_AEGIS128L_KEYBYTES) {
+            throw new SodiumException('Key must be CRYPTO_AEAD_AEGIS128L_KEYBYTES long');
+        }
+
+        list($ct, $tag) = ParagonIE_Sodium_Core_AEGIS128L::encrypt($plaintext, $assocData, $key, $nonce);
+        return $ct . $tag;
+    }
+
+    /**
+     * Return a secure random key for use with the AEGIS-128L
+     * symmetric AEAD interface.
+     *
+     * @return string
+     * @throws Exception
+     * @throws Error
+     */
+    public static function crypto_aead_aegis128l_keygen()
+    {
+        return random_bytes(self::CRYPTO_AEAD_AEGIS128L_KEYBYTES);
+    }
+
+    /**
+     * Authenticated Encryption with Associated Data: Decryption
+     *
+     * Algorithm:
+     *     AEGIS-256
+     *
+     * @param string $ciphertext Encrypted message (with MAC appended)
+     * @param string $assocData  Authenticated Associated Data (unencrypted)
+     * @param string $nonce      Number to be used only Once; must be 32 bytes
+     * @param string $key        Encryption key
+     *
+     * @return string            The original plaintext message
+     * @throws SodiumException
+     * @throws TypeError
+     * @psalm-suppress MixedArgument
+     * @psalm-suppress MixedInferredReturnType
+     * @psalm-suppress MixedReturnStatement
+     */
+    public static function crypto_aead_aegis256_decrypt(
+        $ciphertext = '',
+        $assocData = '',
+        $nonce = '',
+        $key = ''
+    ) {
+        ParagonIE_Sodium_Core_Util::declareScalarType($ciphertext, 'string', 1);
+        ParagonIE_Sodium_Core_Util::declareScalarType($assocData, 'string', 2);
+        ParagonIE_Sodium_Core_Util::declareScalarType($nonce, 'string', 3);
+        ParagonIE_Sodium_Core_Util::declareScalarType($key, 'string', 4);
+
+        /* Input validation: */
+        if (ParagonIE_Sodium_Core_Util::strlen($nonce) !== self::CRYPTO_AEAD_AEGIS256_NPUBBYTES) {
+            throw new SodiumException('Nonce must be CRYPTO_AEAD_AEGIS256_NPUBBYTES long');
+        }
+        if (ParagonIE_Sodium_Core_Util::strlen($key) !== self::CRYPTO_AEAD_AEGIS256_KEYBYTES) {
+            throw new SodiumException('Key must be CRYPTO_AEAD_AEGIS256_KEYBYTES long');
+        }
+        $ct_length = ParagonIE_Sodium_Core_Util::strlen($ciphertext);
+        if ($ct_length < self::CRYPTO_AEAD_AEGIS256_ABYTES) {
+            throw new SodiumException('Message must be at least CRYPTO_AEAD_AEGIS256_ABYTES long');
+        }
+
+        $ct = ParagonIE_Sodium_Core_Util::substr(
+            $ciphertext,
+            0,
+            $ct_length - self::CRYPTO_AEAD_AEGIS256_ABYTES
+        );
+        $tag = ParagonIE_Sodium_Core_Util::substr(
+            $ciphertext,
+            $ct_length - self::CRYPTO_AEAD_AEGIS256_ABYTES,
+            self::CRYPTO_AEAD_AEGIS256_ABYTES
+        );
+        return ParagonIE_Sodium_Core_AEGIS256::decrypt($ct, $tag, $assocData, $key, $nonce);
+    }
+
+    /**
+     * Authenticated Encryption with Associated Data: Encryption
+     *
+     * Algorithm:
+     *     AEGIS-256
+     *
+     * @param string $plaintext Message to be encrypted
+     * @param string $assocData Authenticated Associated Data (unencrypted)
+     * @param string $nonce Number to be used only Once; must be 32 bytes
+     * @param string $key Encryption key
+     *
+     * @return string           Ciphertext with 32-byte authentication tag appended
+     * @throws SodiumException
+     * @throws TypeError
+     * @psalm-suppress MixedArgument
+     */
+    public static function crypto_aead_aegis256_encrypt(
+        $plaintext = '',
+        $assocData = '',
+        $nonce = '',
+        $key = ''
+    ) {
+        ParagonIE_Sodium_Core_Util::declareScalarType($plaintext, 'string', 1);
+        ParagonIE_Sodium_Core_Util::declareScalarType($assocData, 'string', 2);
+        ParagonIE_Sodium_Core_Util::declareScalarType($nonce, 'string', 3);
+        ParagonIE_Sodium_Core_Util::declareScalarType($key, 'string', 4);
+
+        /* Input validation: */
+        if (ParagonIE_Sodium_Core_Util::strlen($nonce) !== self::CRYPTO_AEAD_AEGIS256_NPUBBYTES) {
+            throw new SodiumException('Nonce must be CRYPTO_AEAD_AEGIS128L_KEYBYTES long');
+        }
+        if (ParagonIE_Sodium_Core_Util::strlen($key) !== self::CRYPTO_AEAD_AEGIS256_KEYBYTES) {
+            throw new SodiumException('Key must be CRYPTO_AEAD_AEGIS128L_KEYBYTES long');
+        }
+
+        list($ct, $tag) = ParagonIE_Sodium_Core_AEGIS256::encrypt($plaintext, $assocData, $key, $nonce);
+        return $ct . $tag;
+    }
+
+    /**
+     * Return a secure random key for use with the AEGIS-256
+     * symmetric AEAD interface.
+     *
+     * @return string
+     * @throws Exception
+     * @throws Error
+     */
+    public static function crypto_aead_aegis256_keygen()
+    {
+        return random_bytes(self::CRYPTO_AEAD_AEGIS256_KEYBYTES);
     }
 
     /**
@@ -3155,6 +3375,55 @@ class ParagonIE_Sodium_Compat
     }
 
     /**
+     * DANGER! UNAUTHENTICATED ENCRYPTION!
+     *
+     * Unless you are following expert advice, do not use this feature.
+     *
+     * Algorithm: XChaCha20
+     *
+     * This DOES NOT provide ciphertext integrity.
+     *
+     * @param string $message Plaintext message
+     * @param string $nonce Number to be used Once; must be 24 bytes
+     * @param int $counter
+     * @param string $key Encryption key
+     * @return string         Encrypted text which is vulnerable to chosen-
+     *                        ciphertext attacks unless you implement some
+     *                        other mitigation to the ciphertext (i.e.
+     *                        Encrypt then MAC)
+     * @param bool $dontFallback
+     * @throws SodiumException
+     * @throws TypeError
+     * @psalm-suppress MixedArgument
+     */
+    public static function crypto_stream_xchacha20_xor_ic($message, $nonce, $counter, $key, $dontFallback = false)
+    {
+        /* Type checks: */
+        ParagonIE_Sodium_Core_Util::declareScalarType($message, 'string', 1);
+        ParagonIE_Sodium_Core_Util::declareScalarType($nonce, 'string', 2);
+        ParagonIE_Sodium_Core_Util::declareScalarType($counter, 'int', 3);
+        ParagonIE_Sodium_Core_Util::declareScalarType($key, 'string', 4);
+
+        /* Input validation: */
+        if (ParagonIE_Sodium_Core_Util::strlen($nonce) !== self::CRYPTO_STREAM_XCHACHA20_NONCEBYTES) {
+            throw new SodiumException('Argument 2 must be CRYPTO_SECRETBOX_XCHACHA20_NONCEBYTES long.');
+        }
+        if (ParagonIE_Sodium_Core_Util::strlen($key) !== self::CRYPTO_STREAM_XCHACHA20_KEYBYTES) {
+            throw new SodiumException('Argument 3 must be CRYPTO_SECRETBOX_XCHACHA20_KEYBYTES long.');
+        }
+
+        if (is_callable('sodium_crypto_stream_xchacha20_xor_ic') && !$dontFallback) {
+            return sodium_crypto_stream_xchacha20_xor_ic($message, $nonce, $counter, $key);
+        }
+
+        $ic = ParagonIE_Sodium_Core_Util::store64_le($counter);
+        if (PHP_INT_SIZE === 4) {
+            return ParagonIE_Sodium_Core32_XChaCha20::streamXorIc($message, $nonce, $key, $ic);
+        }
+        return ParagonIE_Sodium_Core_XChaCha20::streamXorIc($message, $nonce, $key, $ic);
+    }
+
+    /**
      * Return a secure random key for use with crypto_stream_xchacha20
      *
      * @return string
@@ -3170,26 +3439,28 @@ class ParagonIE_Sodium_Compat
      * Cache-timing-safe implementation of hex2bin().
      *
      * @param string $string Hexadecimal string
+     * @param string $ignore List of characters to ignore; useful for whitespace
      * @return string        Raw binary string
      * @throws SodiumException
      * @throws TypeError
      * @psalm-suppress TooFewArguments
      * @psalm-suppress MixedArgument
      */
-    public static function hex2bin($string)
+    public static function hex2bin($string, $ignore = '')
     {
         /* Type checks: */
         ParagonIE_Sodium_Core_Util::declareScalarType($string, 'string', 1);
+        ParagonIE_Sodium_Core_Util::declareScalarType($ignore, 'string', 2);
 
         if (self::useNewSodiumAPI()) {
             if (is_callable('sodium_hex2bin')) {
-                return (string) sodium_hex2bin($string);
+                return (string) sodium_hex2bin($string, $ignore);
             }
         }
         if (self::use_fallback('hex2bin')) {
-            return (string) call_user_func('\\Sodium\\hex2bin', $string);
+            return (string) call_user_func('\\Sodium\\hex2bin', $string, $ignore);
         }
-        return ParagonIE_Sodium_Core_Util::hex2bin($string);
+        return ParagonIE_Sodium_Core_Util::hex2bin($string, $ignore);
     }
 
     /**
@@ -3533,8 +3804,12 @@ class ParagonIE_Sodium_Compat
                 );
             }
         }
+        /** @var positive-int $numBytes */
         if (self::use_fallback('randombytes_buf')) {
             return (string) call_user_func('\\Sodium\\randombytes_buf', $numBytes);
+        }
+        if ($numBytes < 0) {
+            throw new SodiumException("Number of bytes must be a positive integer");
         }
         return random_bytes($numBytes);
     }

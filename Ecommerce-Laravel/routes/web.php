@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\Validator;
+use App\Http\Controllers\Rules\Password;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +24,13 @@ Route::get('user/logout','FrontendController@logout')->name('user.logout');
 Route::get('user/register','FrontendController@register')->name('register.form');
 Route::post('user/register','FrontendController@registerSubmit')->name('register.submit');
 // Reset password
-Route::get('password-reset', 'FrontendController@showResetForm')->name('password.reset'); 
+
+Route::get('/forget-password','\App\Http\Controllers\ForgetPasswordController@forgetPassword')->name('forget.password'); 
+Route::post('/forget-password','\App\Http\Controllers\ForgetPasswordController@forgetPasswordPost')->name('forget.password.post'); 
+Route::get('/reset-password/{token}','\App\Http\Controllers\ForgetPasswordController@resetpassword')->name('reset.password'); 
+Route::post('/reset-password','\App\Http\Controllers\ForgetPasswordController@resetpasswordPost')->name('reset.password.post'); 
+
+
 // Socialite 
 Route::get('login/{provider}/', 'Auth\LoginController@redirect')->name('login.redirect');
 Route::get('login/{provider}/callback/', 'Auth\LoginController@Callback')->name('login.callback');
