@@ -1,6 +1,5 @@
-
-	<!-- Start Footer Area -->
-	<footer class="footer">
+<!-- Start Footer Area -->
+<footer class="footer" style="background-color:#001e63">
 		<!-- Footer Top -->
 		<div class="footer-top section">
 			<div class="container">
@@ -22,35 +21,34 @@
 					<div class="col-lg-2 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer links">
-							<h4>Information</h4>
+							<h4>Thông tin</h4>
 							<ul>
-								<li><a href="{{route('about-us')}}">About Us</a></li>
-								<li><a href="#">Faq</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
-								<li><a href="{{route('contact')}}">Contact Us</a></li>
-								<li><a href="#">Help</a></li>
-							</ul>
-						</div>
-						<!-- End Single Widget -->
-					</div>
-					<div class="col-lg-2 col-md-6 col-12">
-						<!-- Single Widget -->
-						<div class="single-footer links">
-							<h4>Customer Service</h4>
-							<ul>
-								<li><a href="#">Payment Methods</a></li>
-								<li><a href="#">Money-back</a></li>
-								<li><a href="#">Returns</a></li>
-								<li><a href="#">Shipping</a></li>
-								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="{{route('about-us')}}">Về chúng tôi</a></li>
+								<li><a href="#">Điều khoản & Điều kiện</a></li>
+								<li><a href="{{route('contact')}}">Liên hệ chúng tôi</a></li>
+								<li><a href="#">Trợ giúp</a></li>
 							</ul>
 						</div>
 						<!-- End Single Widget -->
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Dịch vụ khách hàng</h4>
+							<ul>
+								<li><a href="#">Phương thức thanh toán</a></li>
+								<li><a href="#">Hoàn tiền</a></li>
+								<li><a href="#">Trả hàng</a></li>
+								<li><a href="#">Vận chuyển</a></li>
+								<li><a href="#">Chính sách bảo mật</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
 						<div class="single-footer social">
-							<h4>Get In Tuch</h4>
+							<h4>Liên hệ</h4>
 							<!-- Single Widget -->
 							<div class="contact">
 								<ul>
