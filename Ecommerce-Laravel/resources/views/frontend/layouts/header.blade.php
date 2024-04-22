@@ -3,34 +3,26 @@
     <div class="topbar">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-12 col-12">
-                    <!-- Top Left -->
-                    <div class="top-left">
-                        <ul class="list-main">
-                            @php
-                                $settings=DB::table('settings')->get();
-                                
-                            @endphp
-                            <li><i class="ti-headphone-alt"></i>@foreach($settings as $data) {{$data->phone}} @endforeach</li>
-                            <li><i class="ti-email"></i> @foreach($settings as $data) {{$data->email}} @endforeach</li>
-                        </ul>
-                    </div>
-                    <!--/ End Top Left -->
-                </div>
-                <div class="col-lg-6 col-md-12 col-12">
+                <div class="col-lg-12 col-md-12 col-12">
                     <!-- Top Right -->
                     <div class="right-content">
                         <ul class="list-main">
+                        @php
+                                $settings=DB::table('settings')->get();
+                                
+                            @endphp
+                           
+                            
                             {{-- <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li> --}}
                             @auth 
                                 @if(Auth::user()->role=='admin')
-                                <li><i class="fa fa-truck"></i> <a href="{{route('order.track')}}">Track Order</a></li>
+                                
 
-                                    <li><i class="ti-user"></i> <a href="{{route('admin')}}"  target="_blank">Dashboard</a></li>
+                                    <li><i class="fa fa-user-o"></i> <a href="{{route('admin')}}"  target="_blank">Dashboard</a></li>
                                 @else 
-                                <li><i class="fa fa-truck"></i> <a href="{{route('order.track')}}">Track Order</a></li>
+                                
 
-                                    <li><i class="ti-user"></i> <a href="{{route('user')}}"  target="_blank">Dashboard</a></li>
+                                    <li><i class="fa fa-user-o"></i> <a href="{{route('user')}}"  target="_blank">Dashboard</a></li>
                                 @endif
                                 <li><i class="ti-power-off"></i> <a href="{{route('user.logout')}}">Logout</a></li>
 
@@ -45,12 +37,14 @@
         </div>
     </div>
     <!-- End Topbar -->
-    <div class="middle-inner">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-2 col-md-2 col-12">
+    <!-- Header Inner -->
+    <div class="header-inner" style="background:white">
+        <div style="padding:0 40px">
+            <div class="cat-nav-head ">
+                <div class="row">
+                <div class="col-lg-1 col-md-2 ">
                     <!-- Logo -->
-                    <div class="logo">
+                    <div class="logo" style="width:100%">
                         @php
                             $settings=DB::table('settings')->get();
                         @endphp                    
@@ -72,15 +66,32 @@
                     <!--/ End Search Form -->
                     <div class="mobile-nav"></div>
                 </div>
-                <div class="col-lg-8 col-md-7 col-12">
-                    <div class="search-bar-top">
+                    <div class="col-lg-5 ">
+                        <div class="menu-area">
+                            <!-- Main Menu -->
+                            <nav class="navbar navbar-expand-lg">
+                                <div class="navbar-collapse">	
+                                    <div class="nav-inner">	
+                                        <ul class="nav main-menu menu navbar-nav">
+                                            <li class="{{Request::path()=='home' ? 'active' : ''}}"><a style="color:#001e63" href="{{route('home')}}">Home</a></li>
+                                            
+        
+                                            <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a style="color:#001e63" href="{{route('product-grids')}}">Products</a><span class="new">New</span></li>												
+                                                {{Helper::getHeaderCategory()}}
+                                            <li class="{{Request::path()=='blog' ? 'active' : ''}}"><a style="color:#001e63" href="{{route('blog')}}">Blog</a></li>									
+                                               
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                            <!--/ End Main Menu -->	
+                        </div>
+                    </div>
+               
+                <div class="col-lg-4 ">
+                    <div class="search-bar-top" style="width:30px">
                         <div class="search-bar">
-                            <select>
-                                <option >All Category</option>
-                                @foreach(Helper::getAllCategory() as $cat)
-                                    <option>{{$cat->title}}</option>
-                                @endforeach
-                            </select>
                             <form method="POST" action="{{route('product.search')}}">
                                 @csrf
                                 <input name="search" placeholder="Search Products Here....." type="search">
@@ -105,7 +116,7 @@
                                     @endphp
                                 @endforeach
                            @endif
-                            <a href="{{route('wishlist')}}" class="single-icon"><i class="fa fa-heart-o"></i> <span class="total-count">{{Helper::wishlistCount()}}</span></a>
+                            <a href="{{route('wishlist')}}" class="single-icon"><i class="fa fa-star-o"></i> <span class="total-count">{{Helper::wishlistCount()}}</span></a>
                             <!-- Shopping Item -->
                             @auth
                                 <div class="shopping-item">
@@ -139,10 +150,10 @@
                             <!--/ End Shopping Item -->
                         </div>
                         {{-- <div class="sinlge-bar">
-                            <a href="{{route('wishlist')}}" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                            <a href="{{route('wishlist')}}" class="single-icon"><i class="fa fa-star-o" aria-hidden="true"></i></a>
                         </div> --}}
                         <div class="sinlge-bar shopping">
-                            <a href="{{route('cart')}}" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{Helper::cartCount()}}</span></a>
+                            <a href="{{route('cart')}}" class="single-icon"><i class="fa fa-shopping-cart"></i> <span class="total-count">{{Helper::cartCount()}}</span></a>
                             <!-- Shopping Item -->
                             @auth
                                 <div class="shopping-item">
@@ -177,35 +188,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- Header Inner -->
-    <div class="header-inner">
-        <div class="container">
-            <div class="cat-nav-head">
-                <div class="row">
-                    <div class="col-lg-12 col-12">
-                        <div class="menu-area">
-                            <!-- Main Menu -->
-                            <nav class="navbar navbar-expand-lg">
-                                <div class="navbar-collapse">	
-                                    <div class="nav-inner">	
-                                        <ul class="nav main-menu menu navbar-nav">
-                                            <li class="{{Request::path()=='home' ? 'active' : ''}}"><a href="{{route('home')}}">Home</a></li>
-                                            <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">About Us</a></li>
-                                            <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">Products</a><span class="new">New</span></li>												
-                                                {{Helper::getHeaderCategory()}}
-                                            <li class="{{Request::path()=='blog' ? 'active' : ''}}"><a href="{{route('blog')}}">Blog</a></li>									
-                                               
-                                            <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">Contact Us</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </nav>
-                            <!--/ End Main Menu -->	
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

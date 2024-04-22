@@ -1417,7 +1417,7 @@ object {
 }
 
 .quickview-content .quickview-action-wrap .quickview-cart a:hover {
-  background-color: #8C52FF;
+  background-color: #131315;
   color:#333;
 }
 
@@ -1703,7 +1703,7 @@ object {
 	border: none;
 }
 .quickview-content .quantity .button .btn:hover{
-	color:#8C52FF;
+	color:#181719;
 }
 .quickview-content .quantity .input-number {
 	border: 1px solid #eceded;
@@ -1733,7 +1733,7 @@ object {
 }
 .quickview-content .add-to-cart .btn:hover{
 	color:#fff;
-	background:#8C52FF;
+	background:#101011;
 }
 .quickview-content .add-to-cart .btn.min {
 	padding: 0 20px;
