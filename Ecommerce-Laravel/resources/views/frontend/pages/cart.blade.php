@@ -124,99 +124,10 @@
 	</div>
 	<!--/ End Shopping Cart -->
 
-	<!-- Start Shop Services Area  -->
-	<section class="shop-services section">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-rocket"></i>
-						<h4>Free shiping</h4>
-						<p>Orders over $100</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-reload"></i>
-						<h4>Free Return</h4>
-						<p>Within 30 days returns</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-lock"></i>
-						<h4>Sucure Payment</h4>
-						<p>100% secure payment</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-				<div class="col-lg-3 col-md-6 col-12">
-					<!-- Start Single Service -->
-					<div class="single-service">
-						<i class="ti-tag"></i>
-						<h4>Best Peice</h4>
-						<p>Guaranteed price</p>
-					</div>
-					<!-- End Single Service -->
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Newsletter -->
-
-	<!-- Start Shop Newsletter  -->
-	@include('frontend.layouts.newsletter')
-	<!-- End Shop Newsletter -->
+	
 
 @endsection
-@push('styles')
-	<style>
-		li.shipping{
-			display: inline-flex;
-			width: 100%;
-			font-size: 14px;
-		}
-		li.shipping .input-group-icon {
-			width: 100%;
-			margin-left: 10px;
-		}
-		.input-group-icon .icon {
-			position: absolute;
-			left: 20px;
-			top: 0;
-			line-height: 40px;
-			z-index: 3;
-		}
-		.form-select {
-			height: 30px;
-			width: 100%;
-		}
-		.form-select .nice-select {
-			border: none;
-			border-radius: 0px;
-			height: 40px;
-			background: #f6f6f6 !important;
-			padding-left: 45px;
-			padding-right: 40px;
-			width: 100%;
-		}
-		.list li{
-			margin-bottom:0 !important;
-		}
-		.list li:hover{
-			background:#F7941D !important;
-			color:white !important;
-		}
-		.form-select .nice-select::after {
-			top: 14px;
-		}
-	</style>
-@endpush
+
 @push('scripts')
 	<script src="{{asset('frontend/js/nice-select/js/jquery.nice-select.min.js')}}"></script>
 	<script src="{{ asset('frontend/js/select2/js/select2.min.js') }}"></script>
