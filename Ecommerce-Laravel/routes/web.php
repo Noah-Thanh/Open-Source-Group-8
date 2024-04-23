@@ -65,6 +65,7 @@ Route::get('/wishlist/{slug}','WishlistController@wishlist')->name('add-to-wishl
 Route::get('wishlist-delete/{id}','WishlistController@wishlistDelete')->name('wishlist-delete');
 Route::post('cart/order','OrderController@store')->name('cart.order');
 Route::get('order/pdf/{id}','OrderController@pdf')->name('order.pdf');
+Route::get('order/export', 'OrderController@export')->name( 'export');
 Route::get('/income','OrderController@incomeChart')->name('product.order.income');
 // Route::get('/user/chart','AdminController@userPieChart')->name('user.piechart');
 Route::get('/product-grids','FrontendController@productGrids')->name('product-grids');
@@ -146,6 +147,8 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::get('/notification/{id}','NotificationController@show')->name('admin.notification');
     Route::get('/notifications','NotificationController@index')->name('all.notification');
     Route::delete('/notification/{id}','NotificationController@delete')->name('notification.delete');
+    Route::get('/confirmemail','NotificationController@confirmemail')->name('confirmemail');
+
     // Password Change
     Route::get('change-password', 'AdminController@changePassword')->name('change.password.form');
     Route::post('change-password', 'AdminController@changPasswordStore')->name('change.password');
