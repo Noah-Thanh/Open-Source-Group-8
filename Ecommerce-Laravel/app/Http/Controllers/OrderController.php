@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Shipping;
+use App\Exports\Export;
+use Maatwebsite\Excel\Facades\Excel;
 use App\User;
 use PDF;
 use Notification;
@@ -286,7 +288,7 @@ class OrderController extends Controller
         $file_name=$order->order_number.'-'.$order->first_name.'.pdf';
         // return $file_name;
         $pdf=PDF::loadview('backend.order.pdf',compact('order'));
-        return $pdf->download($file_name);
+        return $pdf->stream($file_name);
     }
     // Income chart
     public function incomeChart(Request $request){
@@ -313,5 +315,10 @@ class OrderController extends Controller
             $data[$monthName] = (!empty($result[$i]))? number_format((float)($result[$i]), 2, '.', '') : 0.0;
         }
         return $data;
+    }
+
+    public function export() 
+    {
+        return Excel::download(new Export, 'order.xlsx');
     }
 }

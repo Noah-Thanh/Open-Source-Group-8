@@ -1,12 +1,8 @@
 /* =====================================
-Template Name: Eshop
-Author Name: Naimur Rahman
-Author URI: http://www.wpthemesgrid.com/
-Description: Eshop - eCommerce HTML5 Template.
-Version:1.0
+
 ========================================*/
 /*======================================
-[ CSS Table of contents ]
+
 01. Preloader CSS
 02. Header CSS
 	+ Logo
@@ -957,22 +953,17 @@ Version:1.0
 }
 .header.shop .nav li:hover a{
 	color:#fff;
-	background:#001e63;
+	background:#B0C4DE;
 }
 .header.shop.v2 .nav li:hover a{
-	color:#001e63;
-	background:transparent;
+	color:#B0C4DE;
 }
-.header.shop .nav li.active a{
-	color:#fff;
+.header.shop.v2 .nav li.active a{
+	color:#001e63 ;
 	background:#001e63;
 }
 .header.shop.v2 .nav li.active a{
-	color:#333 !important;
-	background:transparent !important;
-}
-.header.shop.v2 .nav li.active a{
-	color:#001e63!important;
+	color:#001e63#001e63;
 }
 .header.shop .nav .dropdown li{
 	margin:0;
@@ -1182,7 +1173,7 @@ Version:1.0
 	color: #fff;
 }
 .header.sticky .header-inner{
-	position:fixed;
+	position:static;
 	top:0;
 	left:0;
 	background:#fff;

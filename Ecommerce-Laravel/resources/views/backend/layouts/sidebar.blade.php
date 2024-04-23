@@ -216,6 +216,11 @@
             <i class="fas fa-cog"></i>
             <span>Settings</span></a>
     </li>
+    <li>
+    <div class="">
+    <a href="{{route('export')}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Excel</a>
+    </div>
+    </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
