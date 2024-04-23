@@ -2,11 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ConfirmEmail;
 use Illuminate\Http\Request;
-use App\Models\Notification;
+//use App\Models\Notification;
+use App\Models\User;
+
 class NotificationController extends Controller
 {
-    public function index(){
+    function confirmemail(){
+        Notification::route('mail', "linyeol2712@gmail.com")
+      //  $user->notify(new ConfirmEmail());
+       ->notify(new ConfirmEmail());
+       return "Notification sent successfully";
+    }
+
+      /*  public function index(){
         return view('backend.notification.index');
     }
     public function show(Request $request){
@@ -33,5 +44,5 @@ class NotificationController extends Controller
             request()->session()->flash('error','Notification not found');
             return back();
         }
-    }
+    }*/
 }

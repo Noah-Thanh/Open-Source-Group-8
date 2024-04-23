@@ -957,18 +957,13 @@
 }
 .header.shop.v2 .nav li:hover a{
 	color:#B0C4DE;
-	background:transparent;
-}
-.header.shop .nav li.active a{
-	color:#fff;
-	background:#B0C4DE;
 }
 .header.shop.v2 .nav li.active a{
-	color:#333 !important;
-	background:transparent !important;
+	color:#001e63 ;
+	background:#001e63;
 }
 .header.shop.v2 .nav li.active a{
-	color:#001e63!important;
+	color:#001e63#001e63;
 }
 .header.shop .nav .dropdown li{
 	margin:0;

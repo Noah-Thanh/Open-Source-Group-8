@@ -110,7 +110,7 @@ class Helper{
         if(Auth::check()){
             if($user_id=="") $user_id=auth()->user()->id;
             // return Cart::where('user_id',$user_id)->where('order_id',null)->sum('amount');
-            return Cart::where('user_id',$user_id)->where('order_id',null)->sum('price');
+            return Cart::where('user_id',$user_id)->where('order_id',null)->sum('amount');
         }
         else{
             return 0;
