@@ -24,7 +24,7 @@
     <!-- Start Checkout -->
     <section class="shop checkout section">
         <div class="container">
-                <form class="form" method="POST" action="{{route('cart.order')}}">
+                <form class="form" method="POST" action="{{route('cart.order')}}"> 
                     @csrf
                     <div class="row"> 
 
@@ -401,7 +401,7 @@
                                 <div class="single-widget get-button">
                                     <div class="content">
                                         <div class="button">
-                                            <button type="submit" class="btn">proceed to checkout</button>
+                                           <button type="submit" class="btn">Proceed to checkout</button>
                                         </div>
                                     </div>
                                 </div>
@@ -409,33 +409,32 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+                        document.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+                            e.preventDefault();
+                            let form = document.querySelector('.form');
+                            let formData = new FormData(form);
+
+                            fetch(form.action, {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => {
+                                // Xử lý response nếu cần
+                                // Chuyển hướng đến route "confirmemail" sau khi submit form thành công
+                                window.location.href = "{{route('confirmemail')}}";
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                        });
+                    </script>
                 </form>
         </div>
     </section>
     <!--/ End Checkout -->
     
-    <!-- Start Shop Newsletter  -->
-    <section class="shop-newsletter section">
-        <div class="container">
-            <div class="inner-top">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 col-12">
-                        <!-- Start Newsletter Inner -->
-                        <div class="inner">
-                            <h4>Newsletter</h4>
-                            <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-                            <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                <input name="EMAIL" placeholder="Your email address" required="" type="email">
-                                <button class="btn">Subscribe</button>
-                            </form>
-                        </div>
-                        <!-- End Newsletter Inner -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Shop Newsletter -->
+  
 @endsection
 @push('styles')
 	<style>
