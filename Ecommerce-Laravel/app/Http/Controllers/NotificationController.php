@@ -10,7 +10,14 @@ use App\Models\User;
 
 class NotificationController extends Controller
 {
-  /*  public function index(){
+    function confirmemail(){
+        Notification::route('mail', "linyeol2712@gmail.com")
+      //  $user->notify(new ConfirmEmail());
+       ->notify(new ConfirmEmail());
+       return "Notification sent successfully";
+    }
+
+      /*  public function index(){
         return view('backend.notification.index');
     }
     public function show(Request $request){
@@ -38,11 +45,4 @@ class NotificationController extends Controller
             return back();
         }
     }*/
-
-    function confirmemail(){
-        Notification::route('mail', "linyeol2712@gmail.com")
-      //  $user->notify(new ConfirmEmail());
-       ->notify(new ConfirmEmail());
-       return "Notification sent successfully";
-    }
 }
