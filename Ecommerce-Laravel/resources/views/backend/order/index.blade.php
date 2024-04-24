@@ -14,7 +14,7 @@
     <div class="card-body">
       <div class="table-responsive">
         @if(count($orders)>0)
-        <table class="table table-bordered table-hover" id="order-dataTable" width="100%" cellspacing="0">
+        <table class="table table-striped table-border border-primary" id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>#</th>
