@@ -66,6 +66,7 @@ return array(
     'App\\Models\\Settings' => $baseDir . '/app/Models/Settings.php',
     'App\\Models\\Shipping' => $baseDir . '/app/Models/Shipping.php',
     'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',
+    'App\\Notifications\\ConfirmEmail' => $baseDir . '/app/Notifications/ConfirmEmail.php',
     'App\\Notifications\\StatusNotification' => $baseDir . '/app/Notifications/StatusNotification.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
