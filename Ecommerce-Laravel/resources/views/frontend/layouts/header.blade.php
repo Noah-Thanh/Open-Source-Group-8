@@ -79,7 +79,7 @@
                                             <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a style="color:#001e63" href="{{route('product-grids')}}">Products</a><span class="new">New</span></li>												
                                                 {{Helper::getHeaderCategory()}}
                                             <li class="{{Request::path()=='blog' ? 'active' : ''}}"><a style="color:#001e63" href="{{route('blog')}}">Blog</a></li>									
-                                               
+
                                             
                                         </ul>
                                     </div>
