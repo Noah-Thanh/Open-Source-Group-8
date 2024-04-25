@@ -5,7 +5,7 @@
     @include('user.layouts.notification')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+      <h1 class="h3 mb-0 text-gray-800">My Orders</h1>
     </div>
 
     <!-- Content Row -->
@@ -93,7 +93,7 @@
       @endphp
       <!-- Order -->
       <div class="col-xl-12 col-lg-12">
-        <table class="table table-bordered table-hover" id="order-dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered table-success table-hover" id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>#</th>

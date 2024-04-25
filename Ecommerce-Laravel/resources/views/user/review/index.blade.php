@@ -14,7 +14,7 @@
     <div class="card-body">
       <div class="table-responsive">
         @if(count($reviews)>0)
-        <table class="table table-bordered" id="order-dataTable" width="100%" cellspacing="0">
+        <table class="table table-bordered table-success " id="order-dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th>#</th>

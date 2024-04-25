@@ -4,7 +4,14 @@
 
 @section('main-content')
 <div class="card">
-<h5 class="card-header">View Order Detail </h5>  
+<h5 class="card-header">View Order Detail 
+<a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Generate PDF</a>
+<a href="{{route('order.edit',$order->id)}}" class=" btn btn-sm btn-warning shadow-sm float-right"><i class="fas fa-edit fa-sm text-white-50"></i> Update Order Status
+                <form method="POST" action="{{route('order.destroy',[$order->id])}}">
+                  @csrf
+                </form></a>
+
+</h5>  
 
   <div class="card-body">
     
@@ -13,7 +20,7 @@
     <section class="confirmation_part section_padding">
       <div class="order_boxes">
               <h4 class="text-center pb-4">ORDER INFORMATION</h4>
-              <table class="table  table-border  border-primary table-striped">
+              <table class="table  table-border table-primary border-primary table-striped">
                     <tr class="">
                         <td>Order Number</td>
                         <td> : {{$order->order_number}}</td>
@@ -75,9 +82,11 @@
                   </tr>
 
               </table>
+
+              <div></div>
   
               <h4 class="text-center pb-4">SHIPPING INFORMATION</h4>
-              <table class="table  table-border  border-primary table-striped ">
+              <table class="table  table-border table-primary border-primary table-striped">
                     <tr class="">
                         <td>Full Name</td>
                         <td> : {{$order->first_name}} {{$order->last_name}}</td>
@@ -98,10 +107,7 @@
                         <td>Country</td>
                         <td> : {{$order->country}}</td>
                     </tr>
-                    <tr>
-                        <td>Post Code</td>
-                        <td> : {{$order->post_code}}</td>
-                    </tr>
+
               </table>
             </div>
         </div>
@@ -109,28 +115,11 @@
     </section>
     @endif
 
-    <table class="table table-borderless">
-            <th>Update Status</th>
-            <td>
-                <a href="{{route('order.edit',$order->id)}}" class="btn btn-primary btn-sm float-left mr-1" style="height:30px; width:30px;border-radius:50%" data-toggle="tooltip" title="edit" data-placement="bottom"><i class="fas fa-edit"></i></a>
-                <form method="POST" action="{{route('order.destroy',[$order->id])}}">
-                  @csrf
-                </form>
-            </td>
-            <th>Export PDF </th>
             
-            <td>
-            <a href="{{route('order.pdf',$order->id)}}" class=" btn btn-sm btn-primary shadow-sm float-left"><i class="fas fa-download fa-sm text-white-50"></i> PDF</a>
 
-            </td>
-
-    </table>
   </div>
 </div>
-<div class="card-body">
-  
-    
-</div>
+
 @endsection
 
 @push('styles')
