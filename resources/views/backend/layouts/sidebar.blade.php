@@ -1,9 +1,8 @@
-<ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('admin')}}">
       <div class="sidebar-brand-icon rotate-n-15">
-        <i class="fas fa-cart-arrow-down"></i>
       </div>
       <div class="sidebar-brand-text mx-3">Admin</div>
     </a>
@@ -215,6 +214,11 @@
         <a class="nav-link" href="{{route('settings')}}">
             <i class="fas fa-cog"></i>
             <span>Settings</span></a>
+    </li>
+    <li>
+    <div class="">
+    <a href="{{route('export')}}" class=" btn btn-sm btn-primary shadow-sm float-right"><i class="fas fa-download fa-sm text-white-50"></i> Excel</a>
+    </div>
     </li>
 
     <!-- Sidebar Toggler (Sidebar) -->

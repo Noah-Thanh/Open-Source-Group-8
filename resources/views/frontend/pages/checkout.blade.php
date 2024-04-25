@@ -1,4 +1,4 @@
-    @extends('frontend.layouts.master')
+@extends('frontend.layouts.master')
 
 @section('title','Checkout page')
 
@@ -24,14 +24,14 @@
     <!-- Start Checkout -->
     <section class="shop checkout section">
         <div class="container">
-                <form class="form" method="POST" action="{{route('cart.order')}}">
+                <form class="form" method="POST" action="{{route('cart.order')}}"> 
                     @csrf
                     <div class="row"> 
 
                         <div class="col-lg-8 col-12">
                             <div class="checkout-form">
-                                <h2>Complete Your Purchase</h2>
-                                <p>Just a few more steps to complete your purchase securely!</p>
+                                <h2>Let us know about your information</h2>
+                                <p></p>
                                 <!-- Form -->
                                 <div class="row">
                                     <div class="col-lg-6 col-md-6 col-12">
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Email Address<span>*</span></label>
+                                            <label>Your Email <span>*</span></label>
                                             <input type="email" name="email" placeholder="" value="{{old('email')}}" required>
                                             @error('email')
                                                 <span class='text-danger'>{{$message}}</span>
@@ -325,32 +325,14 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
-                                            <label>Address Line 1<span>*</span></label>
+                                            <label>Your Address<span>*</span></label>
                                             <input type="text" name="address1" placeholder="" value="{{old('address1')}}">
                                             @error('address1')
                                                 <span class='text-danger'>{{$message}}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label>Address Line 2</label>
-                                            <input type="text" name="address2" placeholder="" value="{{old('address2')}}">
-                                            @error('address2')
-                                                <span class='text-danger'>{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
-                                        <div class="form-group">
-                                            <label>Postal Code</label>
-                                            <input type="text" name="post_code" placeholder="" value="{{old('post_code')}}">
-                                            @error('post_code')
-                                                <span class='text-danger'>{{$message}}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    
+
                                 </div>
                                 <!--/ End Form -->
                             </div>
@@ -396,48 +378,12 @@
                                 </div>
                                 <!--/ End Order Widget -->
                                 <!-- Order Widget -->
-                                <div class="single-widget">
-                                    <h2>Payment Methods</h2>
-                                    <div class="content">
-    <div class="checkbox">
-        {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
-        <form-group>
-            <input name="payment_method"  type="radio" value="cod" required> <label> Cash On Delivery</label><br>
-            <!-- <input name="payment_method"  type="radio" value="paypal"> <label> PayPal</label><br> -->
-            <input name="payment_method"  type="radio" value="cardpay" required> <label> Card Payment</label><br>
-            
-            <!-- Credit Card Details -->
-            <div id="creditCardDetails" style="display: none;">
-                <label for="cardNumber">Card Number:</label>
-                <input type="text" id="cardNumber" name="card_number" maxlength="16"><br>
-
-                <label for="cardName">Name on Card:</label>
-                <input type="text" id="cardName" name="card_name"><br>
-                
-                <label for="expirationDate">Expiration Date:</label>
-                <input type="text" id="expirationDate" name="expiration_date" maxlength="5"><br>
-                
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" name="cvv" maxlength="3"><br>
-            </div>
-        </form-group>
-    </div>
-</div>
-
-                                </div>
-                                <!--/ End Order Widget -->
-                                <!-- Payment Method Widget -->
-                                <div class="single-widget payement">
-                                    <div class="content">
-                                        <img src="{{('backend/img/payment-method.png')}}" alt="#">
-                                    </div>
-                                </div>
-                                <!--/ End Payment Method Widget -->
+                              
                                 <!-- Button Widget -->
                                 <div class="single-widget get-button">
                                     <div class="content">
                                         <div class="button">
-                                            <button type="submit" class="btn">proceed to checkout</button>
+                                           <button type="submit" class="btn">Proceed to checkout</button>
                                         </div>
                                     </div>
                                 </div>
@@ -445,78 +391,32 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+                        document.querySelector('button[type="submit"]').addEventListener('click', function(e) {
+                            e.preventDefault();
+                            let form = document.querySelector('.form');
+                            let formData = new FormData(form);
+
+                            fetch(form.action, {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => {
+                                // Xử lý response nếu cần
+                                // Chuyển hướng đến route "confirmemail" sau khi submit form thành công
+                                window.location.href = "{{route('confirmemail')}}";
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                        });
+                    </script>
                 </form>
         </div>
     </section>
     <!--/ End Checkout -->
     
-    <!-- Start Shop Services Area  -->
-    <section class="shop-services section home">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-rocket"></i>
-                        <h4>Free shiping</h4>
-                        <p>Orders over $100</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-reload"></i>
-                        <h4>Free Return</h4>
-                        <p>Within 30 days returns</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-lock"></i>
-                        <h4>Sucure Payment</h4>
-                        <p>100% secure payment</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Service -->
-                    <div class="single-service">
-                        <i class="ti-tag"></i>
-                        <h4>Best Peice</h4>
-                        <p>Guaranteed price</p>
-                    </div>
-                    <!-- End Single Service -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Shop Services -->
-    
-    <!-- Start Shop Newsletter  -->
-    <section class="shop-newsletter section">
-        <div class="container">
-            <div class="inner-top">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2 col-12">
-                        <!-- Start Newsletter Inner -->
-                        <div class="inner">
-                            <h4>Newsletter</h4>
-                            <p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-                            <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                                <input name="EMAIL" placeholder="Your email address" required="" type="email">
-                                <button class="btn">Subscribe</button>
-                            </form>
-                        </div>
-                        <!-- End Newsletter Inner -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Shop Newsletter -->
+  
 @endsection
 @push('styles')
 	<style>
